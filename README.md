@@ -1,242 +1,92 @@
-# DataSeeding
+# Csag.Extensions.DataSeeding
 
-## What's this about?
+[![NuGet](https://img.shields.io/nuget/v/Csag.Extensions.DataSeeding.svg)](https://www.nuget.org/packages/Csag.Extensions.DataSeeding)
+[![License: MIT](https://img.shields.io/badge/License-MIT-lightgray.svg)](./LICENSE)
 
-From the [database seeding](https://en.wikipedia.org/wiki/Database_seeding) article in Wikipedia:
+A .NET library that splits data seeding code into small seeds. Each seed declares the seeds it depends on with the `[DependsOn]` attribute, and the seeder runs them in dependency order, each in its own dependency injection scope. Circular dependencies are reported with a clear error.
 
-> Database seeding is populating a database with an initial set of data. It's common to load seed data such as initial user accounts or dummy data upon initial setup of an application.
-
-We've all been there - your data seeding code starts simple but grows into a monster file with thousands of lines and complex dependencies. This library helps you split that mess into manageable chunks with proper dependency handling.
-
-## Key Features
-
-- **Attribute-Based Dependencies**: Clean syntax using `[DependsOn(typeof(...))]` attributes
-- **Multi-Dependency Support**: Seeds can depend on multiple other seeds
-- **Circular Dependency Detection**: Catches circular dependencies with clear error messages
-- **Scoped Service Support**: Proper handling of scoped dependencies with lifetime management
-- **Topological Sorting**: Dependency resolution using Kahn's algorithm for execution order
-- **Service Lifetime Safety**: Prevents common DI issues like ObjectDisposedException
-
-## Quick Start
-
-### Add to dependency injection
-
-For Microsoft Dependency Injection:
-
-```csharp
-services.AddDataSeeding();
+```shell
+dotnet add package Csag.Extensions.DataSeeding
 ```
 
-This automatically scans the calling assembly for `ISeed` implementations and prepares them for ordered execution.
+## Projects
 
-#### Advanced Usage
+| Project | Description |
+|---|---|
+| [`Csag.Extensions.DataSeeding`](./Csag.Extensions.DataSeeding) | The library, published as the [Csag.Extensions.DataSeeding](https://www.nuget.org/packages/Csag.Extensions.DataSeeding) NuGet package for `net6.0` and `net8.0`. Its [README](./Csag.Extensions.DataSeeding/README.md) is the package documentation. The CHANGELOG next to it is generated from changesets. |
+| [`Csag.Extensions.DataSeeding.Demo`](./Csag.Extensions.DataSeeding.Demo) | A console application that seeds a fictional CMS with 13 interconnected seeds. Its [README](./Csag.Extensions.DataSeeding.Demo/README.md) explains the dependency graph and how to run it. |
+| `Csag.Extensions.DataSeeding.Tests.*` | xunit tests for the library, plus `Tests.Common` with the fake services they share. |
 
-If your seeds are in a different assembly than the one calling the registration, use the explicit overload:
+## Build and test
 
-```csharp
-services.AddDataSeeding(typeof(Startup).Assembly);
+### Prerequisites
+
+- The .NET SDK pinned in [global.json](global.json) (10.0.4xx, a newer 10.0 SDK rolls forward). It builds the `net6.0` and the `net8.0` targets.
+- The .NET 8.0 runtime, to run the tests.
+- Node.js 24 with Corepack, for the changesets tooling: run `corepack enable` and then `pnpm install` once in the repository root.
+
+### Build
+
+```bash
+dotnet restore --locked-mode
+dotnet build --configuration Release --no-restore
 ```
 
-**Note**: The parameterless overload is preferred for most scenarios. Only use the assembly parameter when seeds are located in a different project/assembly.
+Every project has a `packages.lock.json`, and CI restores in locked mode. After changing a package reference, run `dotnet restore` without `--locked-mode` and commit the updated lock files.
 
-### The `ISeed` interface
+### Run tests
 
-Create seeds by implementing the `ISeed` interface and using the `[DependsOn]` attribute to declare dependencies:
-
-```csharp
-[DependsOn(typeof(TenantSeed), typeof(RoleSeed))]
-public class UserSeed : ISeed
-{
-    public async Task SeedAsync()
-    {
-        // Your seeding logic here
-    }
-}
+```bash
+dotnet test --configuration Release --no-build
 ```
 
-Seeds are instantiated by the dependency injection container, so you can inject services in the constructor, including scoped services.
+### Pack
 
-## Dependency Management
-
-### Defining Dependencies
-
-Use the `[DependsOn]` attribute to specify dependencies. For multiple dependencies, list them in the attribute:
-
-```csharp
-[DependsOn(typeof(TenantSeed), typeof(RoleSeed))]
-public class UserSeed : ISeed
-{
-    public Task SeedAsync()
-    {
-        // Your seeding logic here
-        return Task.CompletedTask;
-    }
-}
+```bash
+dotnet pack --configuration Release --no-build -o ./nupkgs
 ```
 
-#### Single Dependency
+## Preview packages
 
-For seeds with only one dependency:
+Each pull request to `main` or to a `release/**` branch publishes the package to a public preview feed on feedz.io. A draft PR, a PR from a fork and a PR from Dependabot publish no preview. The version is one patch above the current release, for example `2.0.1-pr.42.183` (PR 42, workflow run 183). The **"chore: version packages"** PR publishes a release candidate of the upcoming version instead, for example `2.1.0-pr.73.190`, so the changes of the next release can be tested before it ships. In prerelease mode the version in `package.json` is a prerelease such as `3.0.0-rc.0`, and the preview extends it, for example `3.0.0-rc.0.pr.42.183`. That version sorts after the prerelease and before the next one. A comment on the PR gives the version of its latest push. The feed removes previews after 30 days. Releases go to nuget.org only.
 
-```csharp
-[DependsOn(typeof(TenantSeed))]
-public class UserSeed : ISeed
-{
-    public Task SeedAsync()
-    {
-        // Your seeding logic here
-        return Task.CompletedTask;
-    }
-}
+To use a preview in an application, add the feed to the `nuget.config` of the application. The feed needs no credentials:
+
+```xml
+<packageSources>
+  <clear />
+  <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+  <add key="csag-extensions-dataseeding-previews" value="https://f.feedz.io/collana-solutions/csag-extensions-dataseeding/nuget/index.json" />
+</packageSources>
+<packageSourceMapping>
+  <packageSource key="nuget.org">
+    <package pattern="*" />
+    <package pattern="Csag.Extensions.DataSeeding" />
+  </packageSource>
+  <packageSource key="csag-extensions-dataseeding-previews">
+    <package pattern="Csag.Extensions.DataSeeding" />
+  </packageSource>
+</packageSourceMapping>
 ```
 
-#### No Dependencies
+The `Csag.Extensions.DataSeeding` pattern is also necessary under nuget.org. NuGet looks for a package only in the sources of its most specific pattern, so without it the released versions do not restore.
 
-Seeds without dependencies don't need the attribute:
+To test a preview:
 
-```csharp
-public class TenantSeed : ISeed
-{
-    public Task SeedAsync()
-    {
-        // This seed has no dependencies
-        return Task.CompletedTask;
-    }
-}
-```
+1. Set `Csag.Extensions.DataSeeding` to the preview version.
+2. If the application restores in locked mode, update its `packages.lock.json` files.
+3. Add the feed only on the branch that tests the preview. The main branch of the application then does not need feedz.io to restore.
 
-### Scoped Service Injection
+## Release process
 
-The library handles scoped services properly:
+This repository follows the [collana-solutions release playbook](https://github.com/collana-solutions/release-playbook) (Changesets, NuGet variant):
 
-```csharp
-public class UserSeed : ISeed
-{
-    private readonly UserManager<User> userManager;
-    private readonly ApplicationDbContext context;
-    private readonly ILogger<UserSeed> logger;
+1. Every PR that changes the package needs a changeset. Run `pnpm changeset`, choose the bump type and describe the change for consumers of the package. A change that ships nothing, such as CI or repository documentation, needs an empty changeset: `pnpm changeset --empty`. CI's **Changeset Check** fails a PR without one.
+2. On merge to `main`, the Release workflow keeps a **"chore: version packages"** PR up to date. It bumps the version in `Csag.Extensions.DataSeeding/package.json`, writes it into the `.csproj` with `scripts/sync-versions.mjs` and updates the `CHANGELOG.md`.
+3. Merging that PR creates the git tag and the GitHub Release, which starts the **NuGet Publish** workflow. It packs the package and pushes it to nuget.org through [trusted publishing](https://learn.microsoft.com/nuget/nuget-org/trusted-publishing), so no API key is stored in the repository. To publish an existing release again, for example after a failed push, run **NuGet Publish** from the Actions tab with the release tag.
 
-    public UserSeed(
-        UserManager<User> userManager, 
-        ApplicationDbContext context,
-        ILogger<UserSeed> logger)
-    {
-        this.userManager = userManager;
-        this.context = context;
-        this.logger = logger;
-    }
+Dependabot PRs get their changesets automatically. Do not edit the `CHANGELOG.md` or the `<Version>` in the `.csproj` by hand.
 
-    public async Task SeedAsync()
-    {
-        var user = new User { UserName = "admin" };
-        await this.userManager.CreateAsync(user, "Password123!");
-    }
-}
-```
+## License
 
-**Benefits:**
-
-- Each seed gets a fresh DI scope
-- Scoped services are automatically disposed after execution
-- Prevents ObjectDisposedException and scope validation errors
-
-### The `ISeeder` interface
-
-Resolve `ISeeder` from the service provider to execute seeds:
-
-```csharp
-public class DataInitializer
-{
-    private readonly ISeeder seeder;
-
-    public DataInitializer(ISeeder seeder)
-    {
-        this.seeder = seeder;
-    }
-
-    public async Task RunAsync()
-    {
-        await this.seeder.SeedAsync();
-    }
-}
-```
-
-## Features
-
-### Circular Dependency Detection
-
-The library detects circular dependencies and throws clear error messages:
-
-```csharp
-// This will throw an InvalidOperationException
-[DependsOn(typeof(SeedB))]
-public class SeedA : ISeed 
-{
-    public Task SeedAsync() => Task.CompletedTask;
-}
-
-[DependsOn(typeof(SeedA))] // Circular!
-public class SeedB : ISeed 
-{
-    public Task SeedAsync() => Task.CompletedTask;
-}
-```
-
-Detects all types of cycles:
-
-- Simple cycles: A → B → A
-- Complex cycles: A → B → C → A  
-- Multi-level cycles: A → B → C → D → A
-
-### Complex Dependencies
-
-Seeds can have multiple dependencies:
-
-```csharp
-[DependsOn(typeof(TenantSeed), typeof(RoleSeed), typeof(PermissionSeed))]
-public class ComplexSeed : ISeed
-{
-    // Executes only after ALL dependencies complete
-    public async Task SeedAsync() { /* ... */ }
-}
-```
-
-## Example Usage
-
-```csharp
-// Base seed with no dependencies
-public class UserRolesSeed : ISeed
-{
-    public Task SeedAsync()
-    {
-        // Seed user roles
-        return Task.CompletedTask;
-    }
-}
-
-// Single dependency
-[DependsOn(typeof(UserRolesSeed))]
-public class UsersSeed : ISeed
-{
-    public Task SeedAsync()
-    {
-        // Seed users (requires roles first)
-        return Task.CompletedTask;
-    }
-}
-
-// Multiple dependencies
-[DependsOn(typeof(UsersSeed), typeof(PermissionsSeed))]
-public class UserPermissionsSeed : ISeed
-{
-    public Task SeedAsync()
-    {
-        // Seed user permissions (requires both users and permissions)
-        return Task.CompletedTask;
-    }
-}
-```
-
-## Demo
-
-Check out the [demo project](./Neolution.Extensions.DataSeeding.Demo) for a complete CMS seeding example with 13 interconnected seeds.
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
