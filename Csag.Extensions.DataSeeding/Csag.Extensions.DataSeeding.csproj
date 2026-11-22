@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <Version>1.0.0</Version>
+    <Version>2.0.0</Version>
     <Description>Splits data seeding into small seeds that declare their dependencies with the DependsOn attribute. The seeder runs them in dependency order, each in its own dependency injection scope, and detects circular dependencies.</Description>
     <PackageTags>data seeding seed database dependency-injection</PackageTags>
   </PropertyGroup>
