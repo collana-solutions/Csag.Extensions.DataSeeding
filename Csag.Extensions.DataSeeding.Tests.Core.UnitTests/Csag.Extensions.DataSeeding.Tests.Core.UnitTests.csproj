@@ -13,7 +13,7 @@
     <PackageReference Include="MartinCostello.Logging.XUnit" Version="0.6.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.*" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-    <PackageReference Include="Neolution.CodeAnalysis.TestsRuleset" Version="3.2.1">
+    <PackageReference Include="Csag.CodeAnalysis.TestsRuleset" Version="3.2.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
