@@ -10,7 +10,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.*" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.*" />
     <PackageReference Include="Csag.DotNet.Console" Version="6.0.0" />
-    <PackageReference Include="Csag.CodeAnalysis" Version="3.2.2">
+    <PackageReference Include="Csag.CodeAnalysis" Version="3.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
