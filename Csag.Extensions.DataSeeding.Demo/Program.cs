@@ -2,9 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
-    using Neolution.DotNet.Console;
-    using NLog;
-    using NLog.Extensions.Logging;
+    using Csag.DotNet.Console;
 
     /// <summary>
     /// The program
@@ -19,7 +17,7 @@
         public static async Task Main(string[] args)
         {
             var builder = DotNetConsole.CreateDefaultBuilder(args);
-            var logger = LogManager.Setup().LoadConfigurationFromSection(builder.Configuration).GetCurrentClassLogger();
+            DotNetConsoleLogger.Initialize(builder.Configuration);
 
             try
             {
@@ -31,14 +29,13 @@
             }
             catch (Exception ex)
             {
-                // NLog: catch any exception and log it.
-                logger.Error(ex, "Stopped program because of an unexpected exception");
+                DotNetConsoleLogger.Log.Error(ex, "Stopped program because of an unexpected exception");
                 throw;
             }
             finally
             {
                 // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
-                LogManager.Shutdown();
+                DotNetConsoleLogger.Shutdown();
             }
         }
     }

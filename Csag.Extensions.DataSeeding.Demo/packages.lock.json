@@ -2,6 +2,37 @@
   "version": 1,
   "dependencies": {
     "net8.0": {
+      "Csag.CodeAnalysis": {
+        "type": "Direct",
+        "requested": "[3.3.0, )",
+        "resolved": "3.3.0",
+        "contentHash": "RPBBsBSyOZ+fOkVaUwk8udYvxa4fTt4EA4Dab9DYYXlYbRZ6wWS2AvPAs36oqcxKgZ3GHzZGNc5ttCFsbirUvA==",
+        "dependencies": {
+          "SonarAnalyzer.CSharp": "9.32.0.97167",
+          "StyleCop.Analyzers.Unstable": "1.2.0.556"
+        }
+      },
+      "Csag.DotNet.Console": {
+        "type": "Direct",
+        "requested": "[6.0.0, )",
+        "resolved": "6.0.0",
+        "contentHash": "uZ732/s67HnyP6v1B+QsD+tjFsRkIx18NDjcAFIzFLRdDCXx+0jzSz8cGIiOfE+me83M+g435BQ69TM0ct8M9Q==",
+        "dependencies": {
+          "CommandLineParser": "2.9.1",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.CommandLine": "8.0.0",
+          "Microsoft.Extensions.Configuration.EnvironmentVariables": "8.0.0",
+          "Microsoft.Extensions.Configuration.Json": "8.0.1",
+          "Microsoft.Extensions.Configuration.UserSecrets": "8.0.1",
+          "Microsoft.Extensions.DependencyInjection": "8.0.1",
+          "Microsoft.Extensions.Hosting": "8.0.1",
+          "Microsoft.Extensions.Logging": "8.0.1",
+          "Microsoft.Extensions.Logging.Configuration": "8.0.1",
+          "NLog": "5.3.4",
+          "NLog.Extensions.Logging": "5.3.15",
+          "Scrutor": "6.1.0"
+        }
+      },
       "Microsoft.Extensions.Configuration.UserSecrets": {
         "type": "Direct",
         "requested": "[8.*, )",
@@ -23,37 +54,6 @@
           "Microsoft.Extensions.DependencyInjection": "8.0.1",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
           "Microsoft.Extensions.Options": "8.0.2"
-        }
-      },
-      "Neolution.CodeAnalysis": {
-        "type": "Direct",
-        "requested": "[3.2.1, )",
-        "resolved": "3.2.1",
-        "contentHash": "AQDkBJ9e6TrnhpwTtf4KrwlAPBLy77I5XkNey586nN2IFfjk1LVwBwvOcjORD1dSNtEhOf69JQjdmiMf54C90w==",
-        "dependencies": {
-          "SonarAnalyzer.CSharp": "9.20.0.85982",
-          "StyleCop.Analyzers.Unstable": "1.2.0.556"
-        }
-      },
-      "Neolution.DotNet.Console": {
-        "type": "Direct",
-        "requested": "[5.0.0, )",
-        "resolved": "5.0.0",
-        "contentHash": "4l5H0Sgxr5mJrde4MjtvXzlJHGRbHz9tWp4JMuJkE1xCYFvDY48incEARo0cynDMrm+t6y7TSQpkrJLwsUQbMQ==",
-        "dependencies": {
-          "CommandLineParser": "2.9.1",
-          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
-          "Microsoft.Extensions.Configuration.CommandLine": "8.0.0",
-          "Microsoft.Extensions.Configuration.EnvironmentVariables": "8.0.0",
-          "Microsoft.Extensions.Configuration.Json": "8.0.1",
-          "Microsoft.Extensions.Configuration.UserSecrets": "8.0.1",
-          "Microsoft.Extensions.DependencyInjection": "8.0.1",
-          "Microsoft.Extensions.Hosting": "8.0.1",
-          "Microsoft.Extensions.Logging": "8.0.1",
-          "Microsoft.Extensions.Logging.Configuration": "8.0.1",
-          "NLog": "5.3.4",
-          "NLog.Extensions.Logging": "5.3.15",
-          "Scrutor": "6.0.1"
         }
       },
       "CommandLineParser": {
@@ -349,8 +349,8 @@
       },
       "SonarAnalyzer.CSharp": {
         "type": "Transitive",
-        "resolved": "9.20.0.85982",
-        "contentHash": "c0IYtFg4mYusTafTy0Bs5wev45vRKNShkuoWyQyPMbC6imEFHL7tY/7xbbUJd6JNLYx5vP8wyi2LgiBsMHqb2Q=="
+        "resolved": "9.32.0.97167",
+        "contentHash": "Yxk86RV+8ynJpUhku1Yw2hITFmnmXKkXJ73cIFSy85ol5SnWREQg9RuTyV8nI7V7+pyLKpCfRmD7P0widsgjkg=="
       },
       "StyleCop.Analyzers.Unstable": {
         "type": "Transitive",
