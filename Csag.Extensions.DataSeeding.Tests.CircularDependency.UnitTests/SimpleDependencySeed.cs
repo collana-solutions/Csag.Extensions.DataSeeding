@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.CircularDependency.UnitTests
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
 
@@ -9,11 +10,8 @@
     [DependsOn(typeof(AnotherSeed))]
     public class SimpleDependencySeed : ISeed
     {
-        /// <summary>
-        /// Seeds the data.
-        /// </summary>
-        /// <returns>A task representing the async operation.</returns>
-        public Task SeedAsync()
+        /// <inheritdoc />
+        public Task SeedAsync(CancellationToken cancellationToken)
         {
             // Your seeding logic here
             return Task.CompletedTask;

@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.Core.UnitTests
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Csag.Extensions.DataSeeding.Tests.Common.Fakes.Services;
@@ -41,11 +42,8 @@
             this.scopedServiceWithDependency = scopedServiceWithDependency;
         }
 
-        /// <summary>
-        /// Seeds the data asynchronously.
-        /// </summary>
-        /// <returns>A task representing the asynchronous operation.</returns>
-        public async Task SeedAsync()
+        /// <inheritdoc />
+        public async Task SeedAsync(CancellationToken cancellationToken)
         {
             this.logger.LogInformation("Executing workflow test seed with scoped services");
 

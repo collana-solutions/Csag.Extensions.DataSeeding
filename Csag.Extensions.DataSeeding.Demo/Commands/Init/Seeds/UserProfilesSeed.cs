@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Demo.Commands.Init.Seeds
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Microsoft.Extensions.Logging;
@@ -26,14 +27,14 @@
         }
 
         /// <inheritdoc />
-        public async Task SeedAsync()
+        public async Task SeedAsync(CancellationToken cancellationToken)
         {
             this.logger.LogInformation("Creating user profiles: bio, avatar, contact information...");
-            await Task.Delay(200);
+            await Task.Delay(200, cancellationToken);
             this.logger.LogInformation("Setting up user preferences: theme, language, notifications...");
-            await Task.Delay(150);
+            await Task.Delay(150, cancellationToken);
             this.logger.LogInformation("Configuring user dashboard layouts and widgets...");
-            await Task.Delay(100);
+            await Task.Delay(100, cancellationToken);
             this.logger.LogInformation("User profiles and personalization settings created successfully");
         }
     }

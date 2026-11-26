@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.MultiDependency.UnitTests
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Microsoft.Extensions.DependencyInjection;
@@ -40,7 +41,7 @@
             var seeder = serviceProvider.GetRequiredService<ISeeder>();
 
             // Act & Assert - This should not throw
-            await seeder.SeedAsync();
+            await seeder.SeedAsync(CancellationToken.None);
 
             // If we reach this point, the seeding completed successfully
             Assert.NotNull(seeder);

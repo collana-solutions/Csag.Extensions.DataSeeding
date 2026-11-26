@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +28,7 @@
         }
 
         /// <inheritdoc />
-        public async Task SeedAsync()
+        public async Task SeedAsync(CancellationToken cancellationToken)
         {
             this.logger.LogDebug("Resolving seed dependencies using topological sort");
 
@@ -57,7 +58,7 @@
                     var seedType = seed.GetType();
                     var scopedSeed = (ISeed)scope.ServiceProvider.GetRequiredService(seedType);
                     this.logger.LogTrace("Executing seed: {SeedTypeName}", scopedSeed.GetType().Name);
-                    await scopedSeed.SeedAsync().ConfigureAwait(false);
+                    await scopedSeed.SeedAsync(cancellationToken).ConfigureAwait(false);
                 }
             }
 

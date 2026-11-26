@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Abstractions
 {
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -11,7 +12,8 @@
         /// <summary>
         /// Seeds all registered seed components in dependency order.
         /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The <see cref="Task"/>.</returns>
-        Task SeedAsync();
+        Task SeedAsync(CancellationToken cancellationToken);
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Abstractions
 {
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -18,7 +19,7 @@
     ///         this.logger = logger;
     ///     }
     ///
-    ///     public async Task SeedAsync()
+    ///     public async Task SeedAsync(CancellationToken cancellationToken)
     ///     {
     ///         this.logger.LogInformation("Seeding users...");
     ///         // Your seeding logic here
@@ -32,7 +33,8 @@
         /// Performs the seeding operation asynchronously.
         /// This method is called by the seeding framework after all dependencies have been executed.
         /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A task representing the asynchronous seeding operation.</returns>
-        Task SeedAsync();
+        Task SeedAsync(CancellationToken cancellationToken);
     }
 }
