@@ -58,6 +58,7 @@
                     var seedType = seed.GetType();
                     var scopedSeed = (ISeed)scope.ServiceProvider.GetRequiredService(seedType);
                     this.logger.LogTrace("Executing seed: {SeedTypeName}", scopedSeed.GetType().Name);
+                    cancellationToken.ThrowIfCancellationRequested();
                     await scopedSeed.SeedAsync(cancellationToken).ConfigureAwait(false);
                 }
             }
