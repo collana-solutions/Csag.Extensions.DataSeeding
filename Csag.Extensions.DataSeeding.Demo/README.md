@@ -108,10 +108,10 @@ public class ExampleSeed : ISeed
         this.logger = logger;
     }
 
-    public async Task SeedAsync()
+    public async Task SeedAsync(CancellationToken cancellationToken)
     {
         this.logger.LogInformation("Starting seed operation...");
-        await Task.Delay(200); // Simulate work
+        await Task.Delay(200, cancellationToken); // Simulate work
         this.logger.LogInformation("Seed operation completed");
     }
 }
@@ -146,7 +146,7 @@ You can easily add your own seeds by:
 
 1. Creating a new class implementing `ISeed`
 2. Adding `[DependsOn(typeof(...))]` attributes for dependencies  
-3. Implementing the `SeedAsync()` method
+3. Implementing the `SeedAsync(CancellationToken cancellationToken)` method
 4. Running the demo to see your seed in the execution order
 
 The framework will automatically detect and include your new seeds in the dependency resolution process.

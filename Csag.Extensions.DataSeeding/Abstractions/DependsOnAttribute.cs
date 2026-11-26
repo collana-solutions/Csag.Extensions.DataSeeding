@@ -12,7 +12,7 @@
     /// [DependsOn(typeof(UsersSeed), typeof(RolesSeed))]
     /// public class UserPermissionsSeed : ISeed
     /// {
-    ///     public async Task SeedAsync()
+    ///     public async Task SeedAsync(CancellationToken cancellationToken)
     ///     {
     ///         // This will run after UsersSeed and RolesSeed complete
     ///     }
