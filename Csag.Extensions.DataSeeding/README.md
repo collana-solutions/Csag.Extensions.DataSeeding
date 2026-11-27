@@ -28,7 +28,7 @@ We've all been there - your data seeding code starts simple but grows into a mon
 dotnet add package Csag.Extensions.DataSeeding
 ```
 
-The package targets `net6.0` and `net8.0`.
+The package targets `net8.0` and `net10.0`.
 
 ### Add to dependency injection
 
@@ -58,7 +58,7 @@ Create seeds by implementing the `ISeed` interface and using the `[DependsOn]` a
 [DependsOn(typeof(TenantSeed), typeof(RoleSeed))]
 public class UserSeed : ISeed
 {
-    public async Task SeedAsync()
+    public async Task SeedAsync(CancellationToken cancellationToken)
     {
         // Your seeding logic here
     }
@@ -77,7 +77,7 @@ Use the `[DependsOn]` attribute to specify dependencies. For multiple dependenci
 [DependsOn(typeof(TenantSeed), typeof(RoleSeed))]
 public class UserSeed : ISeed
 {
-    public Task SeedAsync()
+    public Task SeedAsync(CancellationToken cancellationToken)
     {
         // Your seeding logic here
         return Task.CompletedTask;
@@ -93,7 +93,7 @@ For seeds with only one dependency:
 [DependsOn(typeof(TenantSeed))]
 public class UserSeed : ISeed
 {
-    public Task SeedAsync()
+    public Task SeedAsync(CancellationToken cancellationToken)
     {
         // Your seeding logic here
         return Task.CompletedTask;
@@ -108,7 +108,7 @@ Seeds without dependencies don't need the attribute:
 ```csharp
 public class TenantSeed : ISeed
 {
-    public Task SeedAsync()
+    public Task SeedAsync(CancellationToken cancellationToken)
     {
         // This seed has no dependencies
         return Task.CompletedTask;
@@ -137,10 +137,10 @@ public class UserSeed : ISeed
         this.logger = logger;
     }
 
-    public async Task SeedAsync()
+    public async Task SeedAsync(CancellationToken cancellationToken)
     {
         var user = new User { UserName = "admin" };
-        await this.userManager.CreateAsync(user, "Password123!");
+        await this.userManager.CreateAsync(user, "Password123!", cancellationToken);
     }
 }
 ```
@@ -165,9 +165,9 @@ public class DataInitializer
         this.seeder = seeder;
     }
 
-    public async Task RunAsync()
+    public async Task RunAsync(CancellationToken cancellationToken)
     {
-        await this.seeder.SeedAsync();
+        await this.seeder.SeedAsync(cancellationToken);
     }
 }
 ```
@@ -183,13 +183,13 @@ The library detects circular dependencies and throws clear error messages:
 [DependsOn(typeof(SeedB))]
 public class SeedA : ISeed 
 {
-    public Task SeedAsync() => Task.CompletedTask;
+    public Task SeedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }
 
 [DependsOn(typeof(SeedA))] // Circular!
 public class SeedB : ISeed 
 {
-    public Task SeedAsync() => Task.CompletedTask;
+    public Task SeedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }
 ```
 
@@ -208,7 +208,7 @@ Seeds can have multiple dependencies:
 public class ComplexSeed : ISeed
 {
     // Executes only after ALL dependencies complete
-    public async Task SeedAsync() { /* ... */ }
+    public async Task SeedAsync(CancellationToken cancellationToken) { /* ... */ }
 }
 ```
 
@@ -218,7 +218,7 @@ public class ComplexSeed : ISeed
 // Base seed with no dependencies
 public class UserRolesSeed : ISeed
 {
-    public Task SeedAsync()
+    public Task SeedAsync(CancellationToken cancellationToken)
     {
         // Seed user roles
         return Task.CompletedTask;
@@ -229,7 +229,7 @@ public class UserRolesSeed : ISeed
 [DependsOn(typeof(UserRolesSeed))]
 public class UsersSeed : ISeed
 {
-    public Task SeedAsync()
+    public Task SeedAsync(CancellationToken cancellationToken)
     {
         // Seed users (requires roles first)
         return Task.CompletedTask;
@@ -240,7 +240,7 @@ public class UsersSeed : ISeed
 [DependsOn(typeof(UsersSeed), typeof(PermissionsSeed))]
 public class UserPermissionsSeed : ISeed
 {
-    public Task SeedAsync()
+    public Task SeedAsync(CancellationToken cancellationToken)
     {
         // Seed user permissions (requires both users and permissions)
         return Task.CompletedTask;

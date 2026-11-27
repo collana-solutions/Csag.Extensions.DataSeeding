@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.ScopedServices.UnitTests
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Csag.Extensions.DataSeeding.Tests.Common.Fakes.Services;
@@ -49,7 +50,7 @@
             var seeder = serviceProvider.GetRequiredService<ISeeder>();
 
             // Act & Assert - This should not throw any scope validation errors
-            await seeder.SeedAsync();
+            await seeder.SeedAsync(CancellationToken.None);
 
             // Additional verification: Ensure we can still create new scoped instances after seeding
             using var scope = serviceProvider.CreateScope();

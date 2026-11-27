@@ -1,6 +1,7 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.Core.UnitTests.Fakes
 {
     using System;
+    using System.Threading;
     using Csag.Extensions.DataSeeding.Abstractions;
 
     /// <summary>
@@ -30,7 +31,7 @@
         {
             try
             {
-                this.seeder.SeedAsync();
+                this.seeder.SeedAsync(CancellationToken.None);
                 return true;
             }
             catch (Exception)

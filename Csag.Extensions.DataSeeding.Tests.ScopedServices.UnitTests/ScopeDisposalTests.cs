@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.ScopedServices.UnitTests
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Csag.Extensions.DataSeeding.Tests.Common.Fakes.Services;
@@ -78,7 +79,7 @@
 
             // Act & Assert - This should work without throwing
             var seeder = serviceProvider.GetRequiredService<ISeeder>();
-            await seeder.SeedAsync();
+            await seeder.SeedAsync(CancellationToken.None);
 
             // If we get here, the scoped services worked correctly
             seeder.ShouldNotBeNull();

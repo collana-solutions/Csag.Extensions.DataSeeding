@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Demo.Commands.Init.Seeds
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Microsoft.Extensions.Logging;
@@ -26,16 +27,16 @@
         }
 
         /// <inheritdoc />
-        public async Task SeedAsync()
+        public async Task SeedAsync(CancellationToken cancellationToken)
         {
             this.logger.LogInformation("Configuring site theme to 'Professional Dark'...");
-            await Task.Delay(150);
+            await Task.Delay(150, cancellationToken);
 
             this.logger.LogInformation("Setting default language to 'English', timezone to 'UTC'...");
-            await Task.Delay(100);
+            await Task.Delay(100, cancellationToken);
 
             this.logger.LogInformation("Configuring SEO settings: meta titles, descriptions, keywords...");
-            await Task.Delay(120);
+            await Task.Delay(120, cancellationToken);
 
             this.logger.LogInformation("Site-wide settings configuration completed");
         }

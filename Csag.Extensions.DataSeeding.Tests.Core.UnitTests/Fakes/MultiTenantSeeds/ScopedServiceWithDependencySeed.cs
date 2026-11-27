@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.Core.UnitTests.Fakes.MultiTenantSeeds
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Csag.Extensions.DataSeeding.Tests.Common.Fakes.Services;
@@ -34,7 +35,7 @@
         }
 
         /// <inheritdoc />
-        public async Task SeedAsync()
+        public async Task SeedAsync(CancellationToken cancellationToken)
         {
             this.logger.LogInformation("Starting scoped service with dependency seed");
 

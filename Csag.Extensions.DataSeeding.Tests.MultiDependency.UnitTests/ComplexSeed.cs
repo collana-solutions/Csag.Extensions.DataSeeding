@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.MultiDependency.UnitTests
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
 
@@ -9,11 +10,8 @@
     [DependsOn(typeof(FoundationSeedA), typeof(FoundationSeedB))]
     public class ComplexSeed : ISeed
     {
-        /// <summary>
-        /// Seeds the data.
-        /// </summary>
-        /// <returns>A task representing the asynchronous operation.</returns>
-        public Task SeedAsync()
+        /// <inheritdoc />
+        public Task SeedAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }

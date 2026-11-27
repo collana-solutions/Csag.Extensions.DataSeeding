@@ -1,6 +1,7 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.CircularDependency.UnitTests
 {
     using System;
+    using System.Threading;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
@@ -40,7 +41,7 @@
             var seeder = serviceProvider.GetRequiredService<ISeeder>();
 
             // Act & Assert
-            Should.Throw<InvalidOperationException>(() => seeder.SeedAsync().GetAwaiter().GetResult())
+            Should.Throw<InvalidOperationException>(() => seeder.SeedAsync(CancellationToken.None).GetAwaiter().GetResult())
                 .Message.ShouldContain("Circular dependency detected");
         }
 
@@ -57,7 +58,7 @@
             var seeder = serviceProvider.GetRequiredService<ISeeder>();
 
             // Act & Assert - should detect A → B → C → A cycle
-            var exception = Should.Throw<InvalidOperationException>(() => seeder.SeedAsync().GetAwaiter().GetResult());
+            var exception = Should.Throw<InvalidOperationException>(() => seeder.SeedAsync(CancellationToken.None).GetAwaiter().GetResult());
             exception.Message.ShouldContain("Circular dependency detected");
 
             // Verify that all three seeds are mentioned as part of the cycle

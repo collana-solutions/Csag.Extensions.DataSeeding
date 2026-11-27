@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Demo.Commands.Init.Seeds
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Microsoft.Extensions.Logging;
@@ -26,12 +27,12 @@
         }
 
         /// <inheritdoc />
-        public async Task SeedAsync()
+        public async Task SeedAsync(CancellationToken cancellationToken)
         {
             this.logger.LogInformation("Configuring media processing settings: thumbnail sizes, compression levels...");
-            await Task.Delay(200);
+            await Task.Delay(200, cancellationToken);
             this.logger.LogInformation("Generating thumbnails for uploaded media files...");
-            await Task.Delay(300);
+            await Task.Delay(300, cancellationToken);
             this.logger.LogInformation("Media processing configuration completed and thumbnails generated");
         }
     }

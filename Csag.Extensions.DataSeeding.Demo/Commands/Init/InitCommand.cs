@@ -48,7 +48,7 @@
                 this.logger.LogInformation("Start data initializer...");
 
                 // Automatic seeding
-                await this.seeder.SeedAsync();
+                await this.seeder.SeedAsync(cancellationToken);
 
                 this.logger.LogInformation("Data initializer finished!");
             }
