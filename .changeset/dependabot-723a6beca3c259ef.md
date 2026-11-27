@@ -4,6 +4,8 @@
 
 Bump the nuget-ecosystem group with 5 updates
 
+Scrutor 7.0.0 needs Microsoft.Extensions.DependencyInjection.Abstractions 10.0.0 and Microsoft.Extensions.DependencyModel 10.0.0. This applies to `net8.0` too. On `net8.0`, the package now also brings System.Text.Json, System.Text.Encodings.Web and System.IO.Pipelines, all at 10.0.0.
+
 | Package | From | To | Bump |
 |---------|------|----|------|
 | coverlet.collector | 6.0.4 | 10.1.0 | 🔴 major |

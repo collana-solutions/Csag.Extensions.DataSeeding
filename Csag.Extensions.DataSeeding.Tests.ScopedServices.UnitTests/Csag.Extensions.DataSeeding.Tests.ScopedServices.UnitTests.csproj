@@ -11,7 +11,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="MartinCostello.Logging.XUnit" Version="0.7.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.15" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
     <PackageReference Include="Csag.CodeAnalysis.TestsRuleset" Version="3.3.0">
       <PrivateAssets>all</PrivateAssets>
