@@ -35,7 +35,7 @@
       },
       "Microsoft.Extensions.Configuration.UserSecrets": {
         "type": "Direct",
-        "requested": "[8.*, )",
+        "requested": "[8.0.1, )",
         "resolved": "8.0.1",
         "contentHash": "7tYqdPPpAK+3jO9d5LTuCK2VxrEdf85Ol4trUr6ds4jclBecadWZ/RyPCbNjfbN5iGTfUnD/h65TOQuqQv2c+A==",
         "dependencies": {
@@ -47,7 +47,7 @@
       },
       "Microsoft.Extensions.Logging": {
         "type": "Direct",
-        "requested": "[8.*, )",
+        "requested": "[8.0.1, )",
         "resolved": "8.0.1",
         "contentHash": "4x+pzsQEbqxhNf1QYRr5TDkLP9UsLT3A6MdRKDDEgrW7h1ljiEPgTNhKYUhNCCAaVpQECVQ+onA91PTPnIp6Lw==",
         "dependencies": {
@@ -365,7 +365,7 @@
       "csag.extensions.dataseeding": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "[8.*, )",
+          "Microsoft.Extensions.Logging.Abstractions": "[8.0.3, )",
           "Scrutor": "[6.1.0, )"
         }
       }
