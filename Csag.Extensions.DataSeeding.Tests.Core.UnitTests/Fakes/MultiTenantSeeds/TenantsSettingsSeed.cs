@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.Core.UnitTests.Fakes.MultiTenantSeeds
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Microsoft.Extensions.Logging;
@@ -23,7 +24,7 @@
         }
 
         /// <inheritdoc />
-        public Task SeedAsync()
+        public Task SeedAsync(CancellationToken cancellationToken)
         {
             this.logger.LogInformation("Seed() called");
             return Task.CompletedTask;

@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Demo.Commands.Init.Seeds
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Microsoft.Extensions.Logging;
@@ -25,10 +26,10 @@
         }
 
         /// <inheritdoc />
-        public async Task SeedAsync()
+        public async Task SeedAsync(CancellationToken cancellationToken)
         {
             this.logger.LogInformation("Uploading sample media files: logo.png, hero-image.jpg, sample-document.pdf...");
-            await Task.Delay(300);
+            await Task.Delay(300, cancellationToken);
             this.logger.LogInformation("Sample media files uploaded to media library");
         }
     }

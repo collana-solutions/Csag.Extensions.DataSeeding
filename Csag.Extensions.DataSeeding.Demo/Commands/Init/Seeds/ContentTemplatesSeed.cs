@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Demo.Commands.Init.Seeds
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Microsoft.Extensions.Logging;
@@ -26,14 +27,14 @@
         }
 
         /// <inheritdoc />
-        public async Task SeedAsync()
+        public async Task SeedAsync(CancellationToken cancellationToken)
         {
             this.logger.LogInformation("Creating content templates: Article template, Page template, Blog post template...");
-            await Task.Delay(200);
+            await Task.Delay(200, cancellationToken);
             this.logger.LogInformation("Setting up content workflows: Draft → Review → Published states...");
-            await Task.Delay(150);
+            await Task.Delay(150, cancellationToken);
             this.logger.LogInformation("Configuring template permissions based on user roles...");
-            await Task.Delay(100);
+            await Task.Delay(100, cancellationToken);
             this.logger.LogInformation("Content templates and workflows created successfully");
         }
     }

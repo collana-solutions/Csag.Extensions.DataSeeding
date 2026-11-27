@@ -1,6 +1,7 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.ScopedServices.UnitTests
 {
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Csag.Extensions.DataSeeding.Tests.Common.Fakes.Services;
@@ -51,7 +52,7 @@
             // 2. Dependency analysis (UseServiceProvider in Seeding)
             // 3. Seed execution (SeedAsync in Seeder)
             var seeder = serviceProvider.GetRequiredService<ISeeder>();
-            await seeder.SeedAsync();
+            await seeder.SeedAsync(CancellationToken.None);
 
             // If we reach here, the entire workflow succeeded
             seeder.ShouldNotBeNull();
@@ -81,7 +82,7 @@
             workflowTestSeedType.ShouldNotBeNull();
 
             // Execute seeding to verify everything works
-            await seeder.SeedAsync();
+            await seeder.SeedAsync(CancellationToken.None);
         }
 
         /// <summary>
@@ -124,7 +125,7 @@
 
             // Act - This should work even with seeds that have multiple scoped dependencies
             var seeder = serviceProvider.GetRequiredService<ISeeder>();
-            await seeder.SeedAsync();
+            await seeder.SeedAsync(CancellationToken.None);
 
             // Assert - If we get here, dependency analysis and execution both succeeded
             seeder.ShouldNotBeNull();

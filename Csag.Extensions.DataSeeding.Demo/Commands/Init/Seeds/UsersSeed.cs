@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Demo.Commands.Init.Seeds
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Microsoft.Extensions.Logging;
@@ -26,10 +27,10 @@
         }
 
         /// <inheritdoc />
-        public async Task SeedAsync()
+        public async Task SeedAsync(CancellationToken cancellationToken)
         {
             this.logger.LogInformation("Creating initial users: admin@example.com, editor@example.com...");
-            await Task.Delay(180);
+            await Task.Delay(180, cancellationToken);
             this.logger.LogInformation("Initial users created and assigned to roles");
         }
     }

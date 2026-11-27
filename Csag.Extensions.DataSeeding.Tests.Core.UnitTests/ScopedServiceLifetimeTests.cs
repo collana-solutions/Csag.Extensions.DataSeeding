@@ -1,5 +1,6 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.Core.UnitTests
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Csag.Extensions.DataSeeding.Abstractions;
     using Csag.Extensions.DataSeeding.Tests.Common.Fakes.Services;
@@ -44,7 +45,7 @@
             var seeder = serviceProvider.GetRequiredService<ISeeder>();
 
             // Act & Assert - This should work without throwing ObjectDisposedException
-            await seeder.SeedAsync();
+            await seeder.SeedAsync(CancellationToken.None);
 
             // Verify we can still resolve scoped services in a new scope (this should work)
             using var scope = serviceProvider.CreateScope();
