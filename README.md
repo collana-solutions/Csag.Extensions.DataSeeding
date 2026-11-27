@@ -13,7 +13,7 @@ dotnet add package Csag.Extensions.DataSeeding
 
 | Project | Description |
 |---|---|
-| [`Csag.Extensions.DataSeeding`](./Csag.Extensions.DataSeeding) | The library, published as the [Csag.Extensions.DataSeeding](https://www.nuget.org/packages/Csag.Extensions.DataSeeding) NuGet package for `net6.0` and `net8.0`. Its [README](./Csag.Extensions.DataSeeding/README.md) is the package documentation. The CHANGELOG next to it is generated from changesets. |
+| [`Csag.Extensions.DataSeeding`](./Csag.Extensions.DataSeeding) | The library, published as the [Csag.Extensions.DataSeeding](https://www.nuget.org/packages/Csag.Extensions.DataSeeding) NuGet package for `net8.0` and `net10.0`. Its [README](./Csag.Extensions.DataSeeding/README.md) is the package documentation. The CHANGELOG next to it is generated from changesets. |
 | [`Csag.Extensions.DataSeeding.Demo`](./Csag.Extensions.DataSeeding.Demo) | A console application that seeds a fictional CMS with 13 interconnected seeds. Its [README](./Csag.Extensions.DataSeeding.Demo/README.md) explains the dependency graph and how to run it. |
 | `Csag.Extensions.DataSeeding.Tests.*` | xunit tests for the library, plus `Tests.Common` with the fake services they share. |
 
@@ -21,8 +21,8 @@ dotnet add package Csag.Extensions.DataSeeding
 
 ### Prerequisites
 
-- The .NET SDK pinned in [global.json](global.json) (10.0.4xx, a newer 10.0 SDK rolls forward). It builds the `net6.0` and the `net8.0` targets.
-- The .NET 8.0 runtime, to run the tests.
+- The .NET SDK pinned in [global.json](global.json) (10.0.4xx, a newer 10.0 SDK rolls forward). It builds the `net8.0` and the `net10.0` targets, and it supplies the .NET 10.0 runtime for the `net10.0` tests.
+- The .NET 8.0 runtime, to run the `net8.0` tests.
 - Node.js 24 with Corepack, for the changesets tooling: run `corepack enable` and then `pnpm install` once in the repository root.
 
 ### Build

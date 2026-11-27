@@ -78,7 +78,7 @@ Each seed includes delays to simulate actual database operations, file processin
 
 ### Prerequisites
 
-- .NET 8.0 or later
+- .NET 10.0 or later
 - Visual Studio 2022 or VS Code
 
 ### Quick Start

@@ -28,7 +28,7 @@ We've all been there - your data seeding code starts simple but grows into a mon
 dotnet add package Csag.Extensions.DataSeeding
 ```
 
-The package targets `net6.0` and `net8.0`.
+The package targets `net8.0` and `net10.0`.
 
 ### Add to dependency injection
 
