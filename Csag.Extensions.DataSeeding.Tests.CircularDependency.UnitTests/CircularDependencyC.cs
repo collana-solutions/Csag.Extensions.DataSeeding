@@ -2,7 +2,6 @@
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Csag.Extensions.DataSeeding.Abstractions;
 
     /// <summary>
     /// Circular dependency test seed C that depends on A, forming a 3-node cycle: A → B → C → A.

@@ -124,12 +124,12 @@ The demo uses standard .NET dependency injection configured in `Startup.cs`:
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddDataSeeding();
+    services.AddDataSeeding(typeof(Startup).Assembly);
     // Additional service registrations...
 }
 ```
 
-**Note**: The parameterless `AddDataSeeding()` method automatically detects seeds in the calling assembly. For cross-assembly scenarios, use `AddDataSeeding(assembly)`.
+**Note**: `AddDataSeeding` registers the seeds of the assemblies that you give to it. If your seeds are in more than one assembly, give all of them.
 
 ## What You'll Learn
 

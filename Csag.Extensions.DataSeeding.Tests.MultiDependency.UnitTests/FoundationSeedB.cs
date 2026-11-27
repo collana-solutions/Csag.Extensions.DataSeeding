@@ -2,7 +2,6 @@
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Csag.Extensions.DataSeeding.Abstractions;
 
     /// <summary>
     /// Foundation seed B for multi-dependency testing.

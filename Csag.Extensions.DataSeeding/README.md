@@ -32,23 +32,21 @@ The package targets `net8.0` and `net10.0`.
 
 ### Add to dependency injection
 
-For Microsoft Dependency Injection:
+For Microsoft Dependency Injection, give the assembly that contains your seeds:
 
 ```csharp
-services.AddDataSeeding();
+services.AddDataSeeding(typeof(Program).Assembly);
 ```
 
-This automatically scans the calling assembly for `ISeed` implementations and prepares them for ordered execution.
+The method registers each public `ISeed` implementation of the assembly that is not abstract. It returns the service collection, so you can chain more calls.
 
-#### Advanced Usage
-
-If your seeds are in a different assembly than the one calling the registration, use the explicit overload:
+If your seeds are in more than one assembly, give all of them:
 
 ```csharp
-services.AddDataSeeding(typeof(Startup).Assembly);
+services.AddDataSeeding(typeof(Program).Assembly, typeof(SharedSeed).Assembly);
 ```
 
-**Note**: The parameterless overload is preferred for most scenarios. Only use the assembly parameter when seeds are located in a different project/assembly.
+The types `ISeed`, `ISeeder` and `DependsOnAttribute` are in the `Csag.Extensions.DataSeeding` namespace. They are in the [Csag.Extensions.DataSeeding.Abstractions](https://www.nuget.org/packages/Csag.Extensions.DataSeeding.Abstractions) package. This package depends on it, so NuGet installs both. A project that only defines seeds, for example a domain or core library of your application, can reference `Csag.Extensions.DataSeeding.Abstractions` alone.
 
 ### The `ISeed` interface
 

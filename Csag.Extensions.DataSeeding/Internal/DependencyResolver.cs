@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Csag.Extensions.DataSeeding.Abstractions;
 
     /// <summary>
     /// Implements topological sorting for seed dependency resolution using Kahn's algorithm.

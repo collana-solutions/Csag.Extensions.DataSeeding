@@ -236,9 +236,13 @@
       "csag.extensions.dataseeding": {
         "type": "Project",
         "dependencies": {
+          "Csag.Extensions.DataSeeding.Abstractions": "[2.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[8.*, )",
           "Scrutor": "[6.1.0, )"
         }
+      },
+      "csag.extensions.dataseeding.abstractions": {
+        "type": "Project"
       }
     },
     "net8.0": {
@@ -476,9 +480,13 @@
       "csag.extensions.dataseeding": {
         "type": "Project",
         "dependencies": {
+          "Csag.Extensions.DataSeeding.Abstractions": "[2.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[8.*, )",
           "Scrutor": "[6.1.0, )"
         }
+      },
+      "csag.extensions.dataseeding.abstractions": {
+        "type": "Project"
       }
     }
   }

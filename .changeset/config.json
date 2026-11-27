@@ -5,7 +5,12 @@
     { "repo": "collana-solutions/Csag.Extensions.DataSeeding" }
   ],
   "commit": false,
-  "fixed": [["@collana-solutions/csag-extensions-dataseeding"]],
+  "fixed": [
+    [
+      "@collana-solutions/csag-extensions-dataseeding",
+      "@collana-solutions/csag-extensions-dataseeding-abstractions"
+    ]
+  ],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",

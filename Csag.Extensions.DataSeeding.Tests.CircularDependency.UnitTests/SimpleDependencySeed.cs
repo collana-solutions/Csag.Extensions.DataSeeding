@@ -2,7 +2,6 @@
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Csag.Extensions.DataSeeding.Abstractions;
 
     /// <summary>
     /// Example seed showing the new simplified syntax for single dependency

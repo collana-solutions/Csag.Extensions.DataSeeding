@@ -1,4 +1,4 @@
-﻿namespace Csag.Extensions.DataSeeding.Abstractions
+﻿namespace Csag.Extensions.DataSeeding
 {
     using System.Threading;
     using System.Threading.Tasks;

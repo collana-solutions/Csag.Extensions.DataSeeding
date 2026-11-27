@@ -112,7 +112,7 @@ jobs:
             echo "No lock file changed, so no changeset is needed"
             exit 0
           fi
-          if [ -n "$(git status --porcelain -- 'Csag.Extensions.DataSeeding/packages.lock.json')" ]; then
+          if [ -n "$(git status --porcelain -- 'Csag.Extensions.DataSeeding/packages.lock.json' 'Csag.Extensions.DataSeeding.Abstractions/packages.lock.json')" ]; then
             export WORKSPACE_PACKAGES_CHANGED=true
           fi
           node scripts/generate-dependabot-changeset.mjs

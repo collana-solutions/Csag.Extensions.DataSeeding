@@ -2,7 +2,6 @@
 {
     using System;
     using System.Threading;
-    using Csag.Extensions.DataSeeding.Abstractions;
 
     /// <summary>
     /// Fake data initializer.

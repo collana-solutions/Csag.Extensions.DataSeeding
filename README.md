@@ -14,6 +14,7 @@ dotnet add package Csag.Extensions.DataSeeding
 | Project | Description |
 |---|---|
 | [`Csag.Extensions.DataSeeding`](./Csag.Extensions.DataSeeding) | The library, published as the [Csag.Extensions.DataSeeding](https://www.nuget.org/packages/Csag.Extensions.DataSeeding) NuGet package for `net8.0` and `net10.0`. Its [README](./Csag.Extensions.DataSeeding/README.md) is the package documentation. The CHANGELOG next to it is generated from changesets. |
+| [`Csag.Extensions.DataSeeding.Abstractions`](./Csag.Extensions.DataSeeding.Abstractions) | The contracts (the interfaces `ISeed` and `ISeeder` and the attribute `DependsOnAttribute`), published as the [Csag.Extensions.DataSeeding.Abstractions](https://www.nuget.org/packages/Csag.Extensions.DataSeeding.Abstractions) NuGet package for `net8.0` and `net10.0`, with no dependency on other packages. The main package depends on it. Both packages always have the same version. Its [README](./Csag.Extensions.DataSeeding.Abstractions/README.md) is the package documentation, and its CHANGELOG is also generated from changesets. |
 | [`Csag.Extensions.DataSeeding.Demo`](./Csag.Extensions.DataSeeding.Demo) | A console application that seeds a fictional CMS with 13 interconnected seeds. Its [README](./Csag.Extensions.DataSeeding.Demo/README.md) explains the dependency graph and how to run it. |
 | `Csag.Extensions.DataSeeding.Tests.*` | xunit tests for the library, plus `Tests.Common` with the fake services they share. |
 
@@ -48,7 +49,7 @@ dotnet pack --configuration Release --no-build -o ./nupkgs
 
 ## Preview packages
 
-Each pull request to `main` or to a `release/**` branch publishes the package to a public preview feed on feedz.io. A draft PR, a PR from a fork and a PR from Dependabot publish no preview. The version is one patch above the current release, for example `2.0.1-pr.42.183` (PR 42, workflow run 183). The **"chore: version packages"** PR publishes a release candidate of the upcoming version instead, for example `2.1.0-pr.73.190`, so the changes of the next release can be tested before it ships. In prerelease mode the version in `package.json` is a prerelease such as `3.0.0-rc.0`, and the preview extends it, for example `3.0.0-rc.0.pr.42.183`. That version sorts after the prerelease and before the next one. A comment on the PR gives the version of its latest push. The feed removes previews after 30 days. Releases go to nuget.org only.
+Each pull request to `main` or to a `release/**` branch publishes both packages to a public preview feed on feedz.io. A draft PR, a PR from a fork and a PR from Dependabot publish no preview. The version is one patch above the current release, for example `2.0.1-pr.42.183` (PR 42, workflow run 183). The **"chore: version packages"** PR publishes a release candidate of the upcoming version instead, for example `2.1.0-pr.73.190`, so the changes of the next release can be tested before it ships. In prerelease mode the version in `package.json` is a prerelease such as `3.0.0-rc.0`, and the preview extends it, for example `3.0.0-rc.0.pr.42.183`. That version sorts after the prerelease and before the next one. A comment on the PR gives the version of its latest push. The feed removes previews after 30 days. Releases go to nuget.org only.
 
 To use a preview in an application, add the feed to the `nuget.config` of the application. The feed needs no credentials:
 
@@ -62,18 +63,20 @@ To use a preview in an application, add the feed to the `nuget.config` of the ap
   <packageSource key="nuget.org">
     <package pattern="*" />
     <package pattern="Csag.Extensions.DataSeeding" />
+    <package pattern="Csag.Extensions.DataSeeding.Abstractions" />
   </packageSource>
   <packageSource key="csag-extensions-dataseeding-previews">
     <package pattern="Csag.Extensions.DataSeeding" />
+    <package pattern="Csag.Extensions.DataSeeding.Abstractions" />
   </packageSource>
 </packageSourceMapping>
 ```
 
-The `Csag.Extensions.DataSeeding` pattern is also necessary under nuget.org. NuGet looks for a package only in the sources of its most specific pattern, so without it the released versions do not restore.
+The preview feed needs a pattern for each of the two package IDs. `Csag.Extensions.DataSeeding` depends on `Csag.Extensions.DataSeeding.Abstractions` of the same preview version, so that package must also restore from the feed. The same two patterns are also necessary under nuget.org. NuGet looks for a package only in the sources of its most specific pattern, so without them the released versions do not restore.
 
 To test a preview:
 
-1. Set `Csag.Extensions.DataSeeding` to the preview version.
+1. Set each package of this repository that the application references (`Csag.Extensions.DataSeeding`, `Csag.Extensions.DataSeeding.Abstractions`) to the preview version.
 2. If the application restores in locked mode, update its `packages.lock.json` files.
 3. Add the feed only on the branch that tests the preview. The main branch of the application then does not need feedz.io to restore.
 
@@ -81,11 +84,11 @@ To test a preview:
 
 This repository follows the [collana-solutions release playbook](https://github.com/collana-solutions/release-playbook) (Changesets, NuGet variant):
 
-1. Every PR that changes the package needs a changeset. Run `pnpm changeset`, choose the bump type and describe the change for consumers of the package. CI's **Changeset Check** fails a PR that changes the project folder, `Directory.Build.props`, `Directory.Packages.props` or `global.json` without a changeset. Add an empty one (`pnpm changeset --empty`) when such a change ships nothing. A PR that only touches CI or repository documentation needs none.
-2. On merge to `main`, the Release workflow keeps a **"chore: version packages"** PR up to date. It bumps the version in `Csag.Extensions.DataSeeding/package.json`, writes it into the `.csproj` with `scripts/sync-versions.mjs` and updates the `CHANGELOG.md`.
-3. Merging that PR creates the git tag and the GitHub Release, which starts the **NuGet Publish** workflow. It packs the package and pushes it to nuget.org through [trusted publishing](https://learn.microsoft.com/nuget/nuget-org/trusted-publishing), so no API key is stored in the repository. To publish an existing release again, for example after a failed push, run **NuGet Publish** from the Actions tab with the release tag.
+1. Every PR that changes a package needs a changeset. Run `pnpm changeset`, choose the packages and the bump type, and describe the change for consumers of the packages. CI's **Changeset Check** fails a PR that changes a package folder, `Directory.Build.props`, `Directory.Packages.props` or `global.json` without a changeset. Add an empty one (`pnpm changeset --empty`) when such a change ships nothing. A PR that only touches CI or repository documentation needs none.
+2. On merge to `main`, the Release workflow keeps a **"chore: version packages"** PR up to date. It bumps the version in the `package.json` of each package folder, writes it into the `.csproj` next to it with `scripts/sync-versions.mjs` and updates the `CHANGELOG.md` files. The two packages are in one fixed group in `.changeset/config.json`, so they always get the same version.
+3. Merging that PR creates a git tag and a GitHub Release for each package. The release of `Csag.Extensions.DataSeeding` starts the **NuGet Publish** workflow. It packs both packages and pushes them to nuget.org through [trusted publishing](https://learn.microsoft.com/nuget/nuget-org/trusted-publishing), so no API key is stored in the repository. To publish an existing release again, for example after a failed push, run **NuGet Publish** from the Actions tab with the release tag of `Csag.Extensions.DataSeeding`.
 
-Dependabot PRs get their changesets automatically. Do not edit the `CHANGELOG.md` or the `<Version>` in the `.csproj` by hand.
+Dependabot PRs get their changesets automatically. Do not edit a `CHANGELOG.md` or the `<Version>` in a `.csproj` by hand.
 
 ## License
 

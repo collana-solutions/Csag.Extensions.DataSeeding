@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Csag.Extensions.DataSeeding.Abstractions;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
@@ -19,9 +18,9 @@
         private static readonly Lazy<Seeding> Lazy = new(() => new Seeding());
 
         /// <summary>
-        /// The assembly that contains the seeds.
+        /// The assemblies that contain the seeds.
         /// </summary>
-        private Assembly? seedsAssembly;
+        private IReadOnlyList<Assembly> seedsAssemblies = Array.Empty<Assembly>();
 
         /// <summary>
         /// The service provider.
@@ -46,12 +45,12 @@
         internal IReadOnlyList<ISeed> Seeds { get; private set; } = Enumerable.Empty<ISeed>().ToList();
 
         /// <summary>
-        /// Configures the services with the internal dependency injection container and scans the specified assembly for data seeds.
+        /// Configures the services with the internal dependency injection container and scans the specified assemblies for data seeds.
         /// </summary>
-        /// <param name="assembly">The assembly containing the <see cref="ISeed"/> implementations.</param>
-        internal void Configure(Assembly assembly)
+        /// <param name="assemblies">The assemblies containing the <see cref="ISeed"/> implementations.</param>
+        internal void Configure(IReadOnlyList<Assembly> assemblies)
         {
-            this.seedsAssembly = assembly;
+            this.seedsAssemblies = assemblies;
         }
 
         /// <summary>
@@ -60,9 +59,9 @@
         /// <param name="serviceProvider">The service provider.</param>
         internal void UseServiceProvider(IServiceProvider serviceProvider)
         {
-            if (this.seedsAssembly is null)
+            if (this.seedsAssemblies.Count == 0)
             {
-                throw new InvalidOperationException("Cannot find the assembly containing the seeds. Did you call the Configure() method before calling this?");
+                throw new InvalidOperationException("Cannot find the assemblies containing the seeds. Did you call the Configure() method before calling this?");
             }
 
             // Store the service provider for creating scopes during execution
@@ -72,8 +71,11 @@
 
             if (logger.IsEnabled(LogLevel.Trace))
             {
-                logger.LogTrace("Scan configured assembly for seeds");
-                logger.LogTrace("Assembly full name: '{SeedsAssemblyFullName}'", this.seedsAssembly.FullName);
+                logger.LogTrace("Scan configured assemblies for seeds");
+                foreach (var seedsAssembly in this.seedsAssemblies)
+                {
+                    logger.LogTrace("Assembly full name: '{SeedsAssemblyFullName}'", seedsAssembly.FullName);
+                }
             }
 
             using (var seedResolveScope = serviceProvider.CreateScope())

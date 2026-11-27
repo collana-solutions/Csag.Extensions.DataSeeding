@@ -10,8 +10,8 @@ name: NuGet Publish
 # it downloads. Restore and build run MSBuild targets, analyzers and source generators that
 # come from NuGet packages, so code from the dependency tree never runs next to the push key.
 #
-# Csag.Extensions.DataSeeding is the single package and therefore the anchor: its GitHub
-# Release runs this workflow, which packs and pushes it.
+# Csag.Extensions.DataSeeding is the anchor: its GitHub Release runs this workflow, which
+# packs and pushes it together with Csag.Extensions.DataSeeding.Abstractions.
 on:
   release:
     types: [published]

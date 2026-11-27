@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <!-- The types keep the namespace Csag.Extensions.DataSeeding. Only the package ID has the suffix .Abstractions. -->
+    <!-- RootNamespace makes the analyzers and the IDE accept this namespace in this project. -->
+    <RootNamespace>Csag.Extensions.DataSeeding</RootNamespace>
+    <Version>2.0.0</Version>
+    <Description>The contracts of Csag.Extensions.DataSeeding: the ISeed and ISeeder interfaces and the DependsOn attribute. Reference this package in a project that only defines seeds. The Csag.Extensions.DataSeeding package runs them.</Description>
+    <PackageTags>data seeding seed database abstractions</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Csag.CodeAnalysis" Version="3.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
