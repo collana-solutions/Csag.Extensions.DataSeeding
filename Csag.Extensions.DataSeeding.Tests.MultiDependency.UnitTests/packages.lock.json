@@ -230,7 +230,7 @@
       "csag.extensions.dataseeding": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "[8.*, )",
+          "Microsoft.Extensions.Logging.Abstractions": "[8.0.3, )",
           "Scrutor": "[7.0.0, )"
         }
       }
@@ -493,7 +493,7 @@
       "csag.extensions.dataseeding": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "[8.*, )",
+          "Microsoft.Extensions.Logging.Abstractions": "[8.0.3, )",
           "Scrutor": "[7.0.0, )"
         }
       }

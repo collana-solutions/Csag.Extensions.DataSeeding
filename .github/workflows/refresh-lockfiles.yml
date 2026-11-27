@@ -15,11 +15,10 @@ name: Refresh lockfiles
 #   pnpm  resolves the HIGHEST version matching each range, so re-resolving after
 #         deleting the lock file genuinely pulls newer transitives. This is the
 #         half that does the work.
-#   NuGet resolves the LOWEST applicable version of a fixed version, so those
-#         references reproduce an identical graph. The Microsoft.Extensions
-#         references float (`8.*`) and re-resolve to the newest 8.x release.
-#         Re-evaluation also covers a locked version that has been unlisted
-#         from the feed.
+#   NuGet resolves the LOWEST applicable version of a fixed version. Every
+#         reference is a fixed version, so the graph is usually identical.
+#         Re-evaluation covers a locked version that has been unlisted from
+#         the feed. Dependabot updates the fixed versions.
 
 on:
   # First day of every month at 08:00 UTC. Freshly published transitives have then
@@ -147,8 +146,7 @@ jobs:
             - pnpm: `pnpm-lock.yaml` regenerated from scratch, every range re-resolved
               to its newest matching version.
             - NuGet: `dotnet restore --force-evaluate` re-resolved the lock files within
-              their existing ranges. Fixed versions keep the lowest applicable version,
-              the floating `8.*` references move to the newest 8.x release.
+              their existing ranges. Fixed versions keep the lowest applicable version.
 
             No range in `package.json` and no version in a project file changes, and pnpm's
             `minimumReleaseAge` still applies. Review the diff and let CI run before merging.
