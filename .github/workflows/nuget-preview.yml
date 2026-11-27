@@ -141,10 +141,11 @@ jobs:
               marker,
               '### NuGet preview packages',
               '',
-              `\`${version}\` for ${sha} is on the [preview feed](${context.serverUrl}/${owner}/${repo}#preview-packages). Set \`Csag.Extensions.DataSeeding\` to this version:`,
+              `\`${version}\` for ${sha} is on the [preview feed](${context.serverUrl}/${owner}/${repo}#preview-packages). Set each package of this repository that you reference to this version:`,
               '',
               '```xml',
               `<PackageVersion Include="Csag.Extensions.DataSeeding" Version="${version}" />`,
+              `<PackageVersion Include="Csag.Extensions.DataSeeding.Abstractions" Version="${version}" />`,
               '```',
             ].join('\n');
 

@@ -2,6 +2,7 @@
 # track its version.
 packages:
   - "Csag.Extensions.DataSeeding"
+  - "Csag.Extensions.DataSeeding.Abstractions"
 
 # Reject package versions published less than 14 days ago (14 * 24 * 60 = 20160 minutes).
 # Mitigates supply-chain attacks by giving freshly published (potentially malicious) versions

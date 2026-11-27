@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csag.Extensions.DataSeeding
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csag.Extensions.DataSeeding.Abstractions", "Csag.Extensions.DataSeeding.Abstractions\Csag.Extensions.DataSeeding.Abstractions.csproj", "{AEFC1856-8A38-47E3-A446-946C99DBC8FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,6 +124,18 @@ Global
 		{99C05D1A-0230-BCC0-35E9-F7EDEAED5970}.Release|x64.Build.0 = Release|Any CPU
 		{99C05D1A-0230-BCC0-35E9-F7EDEAED5970}.Release|x86.ActiveCfg = Release|Any CPU
 		{99C05D1A-0230-BCC0-35E9-F7EDEAED5970}.Release|x86.Build.0 = Release|Any CPU
+		{AEFC1856-8A38-47E3-A446-946C99DBC8FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEFC1856-8A38-47E3-A446-946C99DBC8FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEFC1856-8A38-47E3-A446-946C99DBC8FF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AEFC1856-8A38-47E3-A446-946C99DBC8FF}.Debug|x64.Build.0 = Debug|Any CPU
+		{AEFC1856-8A38-47E3-A446-946C99DBC8FF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AEFC1856-8A38-47E3-A446-946C99DBC8FF}.Debug|x86.Build.0 = Debug|Any CPU
+		{AEFC1856-8A38-47E3-A446-946C99DBC8FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEFC1856-8A38-47E3-A446-946C99DBC8FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEFC1856-8A38-47E3-A446-946C99DBC8FF}.Release|x64.ActiveCfg = Release|Any CPU
+		{AEFC1856-8A38-47E3-A446-946C99DBC8FF}.Release|x64.Build.0 = Release|Any CPU
+		{AEFC1856-8A38-47E3-A446-946C99DBC8FF}.Release|x86.ActiveCfg = Release|Any CPU
+		{AEFC1856-8A38-47E3-A446-946C99DBC8FF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

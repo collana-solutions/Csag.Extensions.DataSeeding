@@ -12,6 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Csag.Extensions.DataSeeding\Csag.Extensions.DataSeeding.csproj" />
+    <ProjectReference Include="..\Csag.Extensions.DataSeeding.Abstractions\Csag.Extensions.DataSeeding.Abstractions.csproj" />
   </ItemGroup>
 </Project>

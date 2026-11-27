@@ -46,7 +46,7 @@ If your seeds are in more than one assembly, give all of them:
 services.AddDataSeeding(typeof(Program).Assembly, typeof(SharedSeed).Assembly);
 ```
 
-The types `ISeed`, `ISeeder` and `DependsOnAttribute` are in the `Csag.Extensions.DataSeeding` namespace.
+The types `ISeed`, `ISeeder` and `DependsOnAttribute` are in the `Csag.Extensions.DataSeeding` namespace. They are in the [Csag.Extensions.DataSeeding.Abstractions](https://www.nuget.org/packages/Csag.Extensions.DataSeeding.Abstractions) package. This package depends on it, so NuGet installs both. A project that only defines seeds, for example a domain or core library of your application, can reference `Csag.Extensions.DataSeeding.Abstractions` alone.
 
 ### The `ISeed` interface
 

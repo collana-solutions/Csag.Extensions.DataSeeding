@@ -236,14 +236,18 @@
       "csag.extensions.dataseeding": {
         "type": "Project",
         "dependencies": {
+          "Csag.Extensions.DataSeeding.Abstractions": "[2.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[8.*, )",
           "Scrutor": "[6.1.0, )"
         }
       },
+      "csag.extensions.dataseeding.abstractions": {
+        "type": "Project"
+      },
       "csag.extensions.dataseeding.tests.common": {
         "type": "Project",
         "dependencies": {
-          "Csag.Extensions.DataSeeding": "[2.0.0, )",
+          "Csag.Extensions.DataSeeding.Abstractions": "[2.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[8.*, )"
         }
       }
@@ -483,14 +487,18 @@
       "csag.extensions.dataseeding": {
         "type": "Project",
         "dependencies": {
+          "Csag.Extensions.DataSeeding.Abstractions": "[2.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[8.*, )",
           "Scrutor": "[6.1.0, )"
         }
       },
+      "csag.extensions.dataseeding.abstractions": {
+        "type": "Project"
+      },
       "csag.extensions.dataseeding.tests.common": {
         "type": "Project",
         "dependencies": {
-          "Csag.Extensions.DataSeeding": "[2.0.0, )",
+          "Csag.Extensions.DataSeeding.Abstractions": "[2.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[8.*, )"
         }
       }

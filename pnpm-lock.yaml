@@ -17,6 +17,8 @@ importers:
 
   Csag.Extensions.DataSeeding: {}
 
+  Csag.Extensions.DataSeeding.Abstractions: {}
+
 packages:
 
   '@changesets/apply-release-plan@8.1.1':
