@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using Csag.Extensions.DataSeeding.Abstractions;
 
     /// <summary>
     /// Compares seeds by their type to detect duplicates.

@@ -1,7 +1,9 @@
 ﻿namespace Csag.Extensions.DataSeeding.Tests.Core.UnitTests
 {
     using System;
-    using Csag.Extensions.DataSeeding.Abstractions;
+    using System.Linq;
+    using System.Reflection;
+    using Csag.Extensions.DataSeeding.Tests.Common.Fakes.Seeds;
     using Csag.Extensions.DataSeeding.Tests.Common.Fakes.Services;
     using Csag.Extensions.DataSeeding.Tests.Core.UnitTests.Fakes;
     using Csag.Extensions.DataSeeding.Tests.Core.UnitTests.Fakes.MultiTenantSeeds;
@@ -59,9 +61,9 @@
             // Arrange
             var services = this.CreateServiceCollection();
 
-            services.AddDataSeeding();
+            services.AddDataSeeding(typeof(BasicTests).Assembly);
 
-            // Issue: SimpleSeed is already added because AddDataSeeding() scanned the assembly for ISeed implementations
+            // Issue: SimpleSeed is already added because AddDataSeeding scanned the assembly for ISeed implementations
             services.AddTransient<ISeed, SimpleSeed>();
 
             services.AddTransient<DataInitializerFake>();
@@ -76,6 +78,99 @@
             exception.Message.ShouldContain("Duplicate seed type(s) detected");
             exception.Message.ShouldContain("SimpleSeed");
             exception.Message.ShouldContain("This usually means the same seed class was registered more than once.");
+        }
+
+        /// <summary>
+        /// Tests that AddDataSeeding returns the service collection it was called on, so that calls can be chained.
+        /// </summary>
+        [Fact]
+        public void AddDataSeedingReturnsTheSameServiceCollection()
+        {
+            // Arrange
+            var services = this.CreateServiceCollection();
+
+            // Act
+            var result = services.AddDataSeeding(typeof(BasicTests).Assembly);
+
+            // Assert
+            result.ShouldBeSameAs(services);
+        }
+
+        /// <summary>
+        /// Tests that an assembly that is given two times is scanned one time, so that its seeds are registered one time.
+        /// </summary>
+        [Fact]
+        public void AddDataSeedingScansAnAssemblyThatIsGivenTwoTimesOneTime()
+        {
+            // Arrange
+            var services = this.CreateServiceCollection();
+
+            // Act
+            services.AddDataSeeding(typeof(BasicTests).Assembly, typeof(BasicTests).Assembly);
+
+            // Assert: a second scan would register each seed again, and the seeder would then throw for the duplicate seed types
+            services.Count(descriptor => descriptor.ServiceType == typeof(ISeed) && descriptor.ImplementationType == typeof(SimpleSeed)).ShouldBe(1);
+            var serviceProvider = services.BuildServiceProvider();
+            Should.NotThrow(() => serviceProvider.GetRequiredService<ISeeder>());
+        }
+
+        /// <summary>
+        /// Tests that AddDataSeeding registers the seeds of each given assembly.
+        /// </summary>
+        [Fact]
+        public void AddDataSeedingRegistersTheSeedsOfEachAssembly()
+        {
+            // Arrange
+            var services = this.CreateServiceCollection();
+
+            // Act
+            services.AddDataSeeding(typeof(BasicTests).Assembly, typeof(AdditionalAssemblySeed).Assembly);
+
+            // Assert
+            services.Count(descriptor => descriptor.ServiceType == typeof(ISeed) && descriptor.ImplementationType == typeof(SimpleSeed)).ShouldBe(1);
+            services.Count(descriptor => descriptor.ServiceType == typeof(ISeed) && descriptor.ImplementationType == typeof(AdditionalAssemblySeed)).ShouldBe(1);
+        }
+
+        /// <summary>
+        /// Tests that AddDataSeeding rejects a null assembly.
+        /// </summary>
+        [Fact]
+        public void AddDataSeedingWithNullAssemblyThrowsArgumentNullException()
+        {
+            // Arrange
+            var services = this.CreateServiceCollection();
+
+            // Act & Assert
+            Should.Throw<ArgumentNullException>(() => services.AddDataSeeding(null!))
+                .ParamName.ShouldBe("assembly");
+        }
+
+        /// <summary>
+        /// Tests that AddDataSeeding rejects a null list of additional assemblies.
+        /// </summary>
+        [Fact]
+        public void AddDataSeedingWithNullAdditionalAssembliesThrowsArgumentNullException()
+        {
+            // Arrange
+            var services = this.CreateServiceCollection();
+
+            // Act & Assert
+            Should.Throw<ArgumentNullException>(() => services.AddDataSeeding(typeof(BasicTests).Assembly, (Assembly[])null!))
+                .ParamName.ShouldBe("additionalAssemblies");
+        }
+
+        /// <summary>
+        /// Tests that AddDataSeeding rejects a list of additional assemblies that contains null.
+        /// </summary>
+        [Fact]
+        public void AddDataSeedingWithNullAdditionalAssemblyEntryThrowsArgumentException()
+        {
+            // Arrange
+            var services = this.CreateServiceCollection();
+
+            // Act & Assert
+            Should.Throw<ArgumentException>(() => services.AddDataSeeding(typeof(BasicTests).Assembly, typeof(BasicTests).Assembly, null!))
+                .ParamName.ShouldBe("additionalAssemblies");
         }
 
         /// <summary>

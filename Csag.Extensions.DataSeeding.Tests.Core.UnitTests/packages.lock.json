@@ -243,6 +243,7 @@
       "csag.extensions.dataseeding.tests.common": {
         "type": "Project",
         "dependencies": {
+          "Csag.Extensions.DataSeeding": "[2.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[8.*, )"
         }
       }
@@ -489,6 +490,7 @@
       "csag.extensions.dataseeding.tests.common": {
         "type": "Project",
         "dependencies": {
+          "Csag.Extensions.DataSeeding": "[2.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[8.*, )"
         }
       }

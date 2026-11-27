@@ -10,4 +10,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.*" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Csag.Extensions.DataSeeding\Csag.Extensions.DataSeeding.csproj" />
+  </ItemGroup>
 </Project>

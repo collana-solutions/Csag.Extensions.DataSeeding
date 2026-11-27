@@ -4,7 +4,6 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Csag.DotNet.Console.Abstractions;
-    using Csag.Extensions.DataSeeding.Abstractions;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
